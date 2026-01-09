@@ -68,8 +68,8 @@
   </head>
   <body>
     <div class="card">
-      <h1 id="title">Time Since Start</h1>
-      <input id="titleInput" placeholder="Set custom title" />
+      <h1 id="title" contenteditable="true">Time Since Start</h1>
+
       <div class="time" id="time">Not started</div>
       <div id="status">Press start to begin</div>
       <button id="startBtn">Start / Reset</button>
@@ -107,8 +107,6 @@
       const savedTitle = localStorage.getItem(TITLE_KEY);
       if (savedTitle) {
         titleEl.textContent = savedTitle;
-        titleInput.value = savedTitle;
-        titleInput.style.display = "none";
       }
 
       // Load saved start date
@@ -136,9 +134,9 @@
         statusEl.textContent = `Started on ${now.toLocaleString()}`;
       };
 
-      // Save custom title
-      titleInput.addEventListener("change", () => {
-        const value = titleInput.value.trim() || "Time Since Start";
+      // Save custom title (inline editable)
+      titleEl.addEventListener("blur", () => {
+        const value = titleEl.textContent.trim() || "Time Since Start";
         titleEl.textContent = value;
         localStorage.setItem(TITLE_KEY, value);
       });
